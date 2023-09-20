@@ -1,18 +1,16 @@
 package crud.model;
 
 import javax.persistence.*;
-
 @Entity
 @Table(name = "crud_users")
 public class User {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column(name = "first_name")
-    private String firstName;
-    @Column(name = "last_name")
-    private String lastName;
+    private Long id;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "surname")
+    private String surname;
     @Column(name = "gender")
     private String gender;
     @Column(name = "age")
@@ -20,36 +18,43 @@ public class User {
 
     public User(){}
 
-    public User(int id, String firstName, String lastName, String gender, int age) {
+    public User(Long id, String name, String surname, String gender, int age) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
+        this.surname = surname ;
         this.gender = gender;
         this.age = age;
     }
 
-    public int getId() {
+    public User(String name, String surname, String gender, int age) {
+        this.name = name;
+        this.surname = surname;
+        this.gender = gender;
+        this.age = age;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getGender() {

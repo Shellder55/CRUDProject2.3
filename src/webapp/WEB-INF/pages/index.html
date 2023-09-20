@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>hello</title>
+    <title>Menu</title>
 </head>
 <body>
 <div th:align="center">
@@ -11,6 +11,34 @@
         <h1 th:text="${msg}"></h1>
     </th:block>
 
+    <table border="2" th:width="200">
+        <tr>
+            <th><a class="p-2 text-dark" href="/create"> Create user </a></th>
+            <th><a class="p-2 text-dark" > Update user </a></th>
+            <th><a class="p-2 text-dark" > Delete user</a></th>
+        </tr>
+    </table>
+</div>
+<br><br>
+<p th:align="center"> <b> List Users </b> </p>
+<div th:align="center">
+    <table border="2" th:width="400px">
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>surname</th>
+            <th>gender</th>
+            <th>age</th>
+        </tr>
+        <tr th:each="list : ${userList}">
+            <td th:utext="${list.id}"> ID</td>
+            <td th:utext="${list.name}"> Model</td>
+            <td th:utext="${list.surname}"> Series</td>
+            <td th:utext="${list.gender}"> ID</td>
+            <td th:utext="${list.age}"> Model</td>
+        </tr>
+    </table>
+</div>
 
 </div>
 </body>

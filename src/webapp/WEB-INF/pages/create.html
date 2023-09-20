@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create User</title>
+</head>
+<body>
+
+<br><br><br><br><br><br><br><br><br><br>
+
+<div th:align="center">
+    <form th:method="POST" th:action="@{/home}" th:object="${user}">
+        <input type="hidden" th:field="*{id}" th:value="*{getId()}">
+
+        <label for="name"> Enter name: </label>
+        <input type="text" th:field="*{name}" th:value="*{getName()}" id="name" width="200" required>
+
+        <br><br>
+        <label for="surname"> Enter surname: </label>
+        <input type="text" th:field="*{surname}" th:value="*{getSurname()}" id="surname" width="200" required>
+
+        <br><br>
+        <label for="gender"> Enter gender: </label>
+        <input type="text" th:field="*{gender}" th:value="*{getGender()}" id="gender" width="200" required>
+
+        <br><br>
+        <label for="age"> Enter age: </label>
+        <input type="text" th:field="*{age}" th:value="*{getAge()}" id="age" width="200" required>
+        <br>
+
+<!--        <input type="hidden" name="_method" value="POST"/>-->
+
+<!--        <filter>-->
+<!--            <filter-name>HiddenHttpMethodFilter</filter-name>-->
+<!--            <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>-->
+<!--        </filter>-->
+
+<!--        <filter-mapping>-->
+<!--            <filter-name>HiddenHttpMethodFilter</filter-name>-->
+<!--            <servlet-name>springmvc</servlet-name>-->
+<!--        </filter-mapping>-->
+
+        <br><br>
+        <input type="submit" value="Add Person!"/>
+
+        <br><br>
+        <a href="redirect:/home">
+            <button>Return</button>
+        </a>
+    </form>
+</div>
+
+</body>
+</html>
