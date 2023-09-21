@@ -27,11 +27,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/home")
-    public String printWelcome(ModelMap modelMap, Model model) {
-        List<String> messages = new ArrayList<>();
-        messages.add("Hello Evgeniy");
-        modelMap.addAttribute("messages", messages);
-
+    public String printWelcome(Model model) {
         List<User> userList = new ArrayList<>();
         userList = userService.getUsers(userList);
         model.addAttribute("userList", userList);
@@ -39,7 +35,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/create")
-    public String newUser(Model model) {
+    public String newUser(@ModelAttribute("user") User user, Model model) {
         model.addAttribute("user", new User());
         return "create";
     }
@@ -49,17 +45,4 @@ public class UserController {
         userService.save(user);
         return "redirect:/home";
     }
-
-//    @PostMapping()
-//    public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult,
-//                           RedirectAttributes attributes) {
-//        if (bindingResult.hasErrors()) {
-//            return "form";
-//        }
-//
-//        userService.save(user);
-//        attributes.addFlashAttribute("flashMessage",
-//                "User " + user.getName() + " successfully created!");
-//        return "redirect:/home";
-//    }
 }

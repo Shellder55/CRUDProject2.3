@@ -10,7 +10,7 @@
 <br><br><br><br><br><br><br><br><br><br>
 
 <div th:align="center">
-    <form th:method="POST" th:action="@{/home}" th:object="${user}">
+    <form th:method="post" th:action="@{/home}" th:object="${user}">
         <input type="hidden" th:field="*{id}" th:value="*{getId()}">
 
         <label for="name"> Enter name: </label>
@@ -24,22 +24,11 @@
         <label for="gender"> Enter gender: </label>
         <input type="text" th:field="*{gender}" th:value="*{getGender()}" id="gender" width="200" required>
 
+
         <br><br>
         <label for="age"> Enter age: </label>
         <input type="text" th:field="*{age}" th:value="*{getAge()}" id="age" width="200" required>
         <br>
-
-<!--        <input type="hidden" name="_method" value="POST"/>-->
-
-<!--        <filter>-->
-<!--            <filter-name>HiddenHttpMethodFilter</filter-name>-->
-<!--            <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>-->
-<!--        </filter>-->
-
-<!--        <filter-mapping>-->
-<!--            <filter-name>HiddenHttpMethodFilter</filter-name>-->
-<!--            <servlet-name>springmvc</servlet-name>-->
-<!--        </filter-mapping>-->
 
         <br><br>
         <input type="submit" value="Add Person!"/>
