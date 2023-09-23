@@ -7,30 +7,23 @@ import crud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Controller
+@RequestMapping("/users")
 public class UserController {
 
-    private final UserService userService;
+    private UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/home")
-    public String printWelcome(Model model) {
-        List<User> userList = new ArrayList<>();
-        userList = userService.getUsers(userList);
-        model.addAttribute("userList", userList);
+    @GetMapping(value = "")
+    public String allUsers(Model model) {
+        model.addAttribute("users", userService.getUsers());
         return "index";
     }
 
@@ -43,6 +36,6 @@ public class UserController {
     @PostMapping()
     public String addUser(@ModelAttribute("user") User user){
         userService.save(user);
-        return "redirect:/home";
+        return "redirect:/users";
     }
 }

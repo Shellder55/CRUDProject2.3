@@ -4,23 +4,31 @@ import crud.model.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.stream.Collectors;
+
 @Repository
+@Transactional
 public class UserDaoImpl implements UserDao {
 
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    //    public EntityManager entityManager = Persistence.createEntityManagerFactory("COLIBRI").createEntityManager();
     @Override
-    public List<User> getUsers(List<User> list) {
-        return list.stream().collect(Collectors.toList());
+    public List<User> getUsers() {
+        if (entityManager == null) {
+            return null;
+        } else {
+            return entityManager.createQuery("from User", User.class).getResultList();
+        }
     }
 
-    public User save(User user){
-//        entityManager.getTransaction().begin();
-//        User userFromDB = entityManager.merge(user);
-//        entityManager.getTransaction().commit();
-//        return userFromDB;
-        return null;
+    public User save(User user) {
+        entityManager.getTransaction().begin();
+        User userFromDB = entityManager.merge(user);
+        entityManager.getTransaction().commit();
+        return userFromDB;
+//        return null;
     }
 }

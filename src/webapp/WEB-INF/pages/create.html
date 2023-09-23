@@ -10,33 +10,31 @@
 <br><br><br><br><br><br><br><br><br><br>
 
 <div th:align="center">
-    <form th:method="post" th:action="@{/home}" th:object="${user}">
+    <form th:method="POST" th:action="@{/users}" th:object="${user}">
         <input type="hidden" th:field="*{id}" th:value="*{getId()}">
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                <label for="name">Name</label>
+                <input type="text" id="name" th:field="*{name}" th:value="*{getName()}" placeholder="Enter user name" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="surname">Last name</label>
+                <input type="text" id="surname" th:field="*{surname}" th:value="*{getSurname()}" placeholder="Enter last name">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                <label for="gender">Email</label>
+                <input type="text" id="gender" th:field="*{gender}" th:value="*{getGender()}" placeholder="Enter email" required>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="age">Password</label>
+                <input type="text" id="age" th:field="*{age}" th:value="*{getAge()}" placeholder="Enter password" required>
+            </div>
+        </div>
 
-        <label for="name"> Enter name: </label>
-        <input type="text" th:field="*{name}" th:value="*{getName()}" id="name" width="200" required>
-
-        <br><br>
-        <label for="surname"> Enter surname: </label>
-        <input type="text" th:field="*{surname}" th:value="*{getSurname()}" id="surname" width="200" required>
-
-        <br><br>
-        <label for="gender"> Enter gender: </label>
-        <input type="text" th:field="*{gender}" th:value="*{getGender()}" id="gender" width="200" required>
-
-
-        <br><br>
-        <label for="age"> Enter age: </label>
-        <input type="text" th:field="*{age}" th:value="*{getAge()}" id="age" width="200" required>
-        <br>
-
-        <br><br>
-        <input type="submit" value="Add Person!"/>
-
-        <br><br>
-        <a href="redirect:/home">
-            <button>Return</button>
-        </a>
+        <button class="btn btn-secondary" type="submit" th:text="*{getId()} ? 'Save' : 'Create'"/>
+        <a class="btn btn-light border-dark" href="/users">Cancel</a>
     </form>
 </div>
 
