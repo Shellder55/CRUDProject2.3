@@ -9,36 +9,55 @@
 </head>
 <body>
 <div th:align="center">
-    <th:block th:each="msg : ${messages}">
-        <h1 th:text="${msg}"></h1>
-    </th:block>
-
     <br><br><br><br><br>
     <table border="2" th:width="200">
         <tr>
-            <th><a class="p-2 text-dark" href="/users/create"> Create user </a></th>
-            <th><a class="p-2 text-dark" > Update user </a></th>
-            <th><a class="p-2 text-dark" > Delete user</a></th>
+            <th><a href="/users/create"><h5 class="text-center"> Create user </h5></a></th>
         </tr>
     </table>
 </div>
 <br><br>
-<p th:align="center"> <b> List Users </b> </p>
+<p th:align="center"><b> List Users </b></p>
 <div th:align="center">
-    <table border="2" th:width="400px">
+    <table class="text-center" border="2" th:width="600px">
         <tr>
             <th>id</th>
             <th>name</th>
             <th>surname</th>
             <th>gender</th>
             <th>age</th>
+            <th th:width="170px">
+                <div class="container text-center">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            update
+                        </div>
+                        <div class="col">
+                            delete
+                        </div>
+                    </div>
+                </div>
         </tr>
-        <tr th:each="list : ${userList}">
+        <tr th:each="list : ${users}">
             <td th:utext="${list.id}"> ID</td>
             <td th:utext="${list.name}"> Model</td>
             <td th:utext="${list.surname}"> Series</td>
             <td th:utext="${list.gender}"> ID</td>
             <td th:utext="${list.age}"> Model</td>
+            <td class="py-1 ">
+                <div class="container text-center">
+                    <div class="row align-items-center">
+
+                        <div class="col">
+                            <a th:href="'/users/' + ${list.id} + '/edit'"> Edit </a>
+                        </div>
+                        <div class="col">
+                            <a type="button" th:href="@{/users/delete(id=${list.getId()})}" th:method="DELETE">
+                                Delete </a>
+                        </div>
+                    </div>
+                </div>
+            </td>
         </tr>
     </table>
 </div>

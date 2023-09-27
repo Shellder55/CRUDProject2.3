@@ -1,6 +1,7 @@
 package crud.model;
 
 import javax.persistence.*;
+
 @Entity
 @Table(name = "crud_users")
 public class User {
@@ -16,12 +17,13 @@ public class User {
     @Column(name = "age")
     private int age;
 
-    public User(){}
+    public User() {
+    }
 
     public User(Long id, String name, String surname, String gender, int age) {
         this.id = id;
         this.name = name;
-        this.surname = surname ;
+        this.surname = surname;
         this.gender = gender;
         this.age = age;
     }
