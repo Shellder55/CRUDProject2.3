@@ -10,9 +10,10 @@ public interface UserService {
 
     List<User> getUsers();
 
-    User findUser(Long id);
+    User findUserById(Long id);
 
-    void saveAndUpdate(User user);
+    void saveUser(User user);
+    void updateUser(User user);
 
     User deleteUser(Long id);
 }

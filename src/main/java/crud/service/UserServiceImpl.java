@@ -18,16 +18,25 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
-    public User findUser(Long id) {
-        return userDao.findUser(id);
+    public User findUserById(Long id) {
+        return userDao.findUserById(id);
     }
 
     public List<User> getUsers() {
         return userDao.getUsers();
     }
 
-    public void saveAndUpdate(User user) {
-        userDao.saveAndUpdate(user);
+    public void saveUser(User user) {
+
+        if(user.getId() == null || user.getId() == 0) {
+            userDao.save(user);
+        }else {
+            userDao.update(user);
+        }
+    }
+
+    public void updateUser(User user) {
+        userDao.update(user);
     }
 
     public User deleteUser(Long id) {
