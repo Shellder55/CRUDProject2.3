@@ -26,17 +26,12 @@ public class UserServiceImpl implements UserService {
         return userDao.getUsers();
     }
 
-    public void saveUser(User user) {
-
-        if(user.getId() == null || user.getId() == 0) {
+    public void saveUpdateUser(User user) {
+        if (user.getId() == null) {
             userDao.save(user);
-        }else {
+        } else {
             userDao.update(user);
         }
-    }
-
-    public void updateUser(User user) {
-        userDao.update(user);
     }
 
     public User deleteUser(Long id) {

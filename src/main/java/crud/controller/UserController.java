@@ -18,6 +18,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping(value = "/login")
+    public String loginPage(){
+        return "login";
+    }
+
     @GetMapping()
     public String allUsers(Model model) {
         model.addAttribute("users", userService.getUsers());
@@ -32,7 +37,7 @@ public class UserController {
 
     @PostMapping()
     public String addUser(@ModelAttribute("user") User user) {
-        userService.saveUser(user);
+        userService.saveUpdateUser(user);
         return "redirect:/users";
     }
 

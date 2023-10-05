@@ -1,7 +1,6 @@
 package crud.model;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 
 @Entity
 @Table(name = "crud_users")
