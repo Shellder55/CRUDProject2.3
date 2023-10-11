@@ -1,10 +1,16 @@
 package crud.model;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "crud_users")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -12,18 +18,28 @@ public class User {
     private String name;
     @Column(name = "surname")
     private String surname;
+    @Column(name = "login", unique = true)
+    private String login;
+    @Column(name = "password")
+    private String password;
     @Column(name = "gender")
     private String gender;
     @Column(name = "age")
     private int age;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "roles_id")
+    private Set<Role> roles = new HashSet<>();
+
     public User() {
     }
 
-    public User(Long id, String name, String surname, String gender, int age) {
+    public User(Long id, String name, String surname, String login, String password, String gender, int age) {
         this.id = id;
         this.name = name;
         this.surname = surname;
+        this.login = login;
+        this.password = password;
         this.gender = gender;
         this.age = age;
     }
@@ -59,6 +75,23 @@ public class User {
         this.surname = surname;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getGender() {
         return gender;
     }
@@ -73,5 +106,43 @@ public class User {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
+    @Override
+    public String getUsername() {
+        return name;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

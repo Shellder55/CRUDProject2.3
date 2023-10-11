@@ -3,43 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Create User</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
-<br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br>
 
 <div th:align="center">
-    <form th:method="POST" th:action="@{/users}" th:object="${user}">
+    <form th:method="POST" th:action="@{/admin}" th:object="${user}">
         <input type="hidden" th:field="*{id}" th:value="*{getId()}">
-        <div class="form-row">
-            <div class="col-md-6 mb-3">
-                <label for="name">Name</label>
-                <input type="text" id="name" th:field="*{name}" th:value="*{getName()}" placeholder="Enter name"
-                       required>
+
+        <div class="">
+
+            <div class="col">
+                <div class="col-md-6 mb-3">
+                    <label for="login">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login</label>
+                    <input type="text" id="login" th:field="*{login}" th:value="*{getLogin()}" placeholder="Enter login"
+                           required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="Password"> Password </label>
+                    <input type="text" id="Password" th:field="*{password}" th:value="*{getPassword()}"
+                           placeholder="Enter Password">
+                </div>
             </div>
-            <br>
-            <div class="col-md-6 mb-3">
-                <label for="surname">Last name</label>
-                <input type="text" id="surname" th:field="*{surname}" th:value="*{getSurname()}"
-                       placeholder="Enter surname">
-            </div>
-        </div>
-        <br>
-        <div class="form-row">
-            <div class="col-md-6 mb-3">
-                <label for="gender">Gender</label>
-                <input type="text" id="gender" th:field="*{gender}" th:value="*{getGender()}" placeholder="Enter gender"
-                       required>
-            </div>
-            <br>
-            <div class="col-md-6 mb-3">
-                <label for="age">Age</label>
-                <input type="text" id="age" th:field="*{age}" th:value="*{getAge()}" placeholder="Enter age" required>
+
+            <br><br>
+
+            <div class="col">
+                <div class="col-md-6 mb-3">
+                    <label for="name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name</label>
+                    <input type="text" id="name" th:field="*{name}" th:value="*{getName()}" placeholder="Enter name"
+                           required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="surname">&nbsp; Surname </label>
+                    <input type="text" id="surname" th:field="*{surname}" th:value="*{getSurname()}"
+                           placeholder="Enter surname">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="gender">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gender</label>
+                    <input type="text" id="gender" th:field="*{gender}" th:value="*{getGender()}"
+                           placeholder="Enter gender"
+                           required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="age">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Age</label>
+                    <input type="text" id="age" th:field="*{age}" th:value="*{getAge()}" placeholder="Enter age"
+                           required>
+                </div>
             </div>
         </div>
         <br>
         <button class="btn btn-secondary" type="submit" th:text="*{getId()} ? 'Save' : 'Create'"/>
-        <a class="btn btn-light border-dark" href="/users">Cancel</a>
+        <a class="btn btn-light border-dark" href="/admin">Cancel</a>
     </form>
 </div>
 
