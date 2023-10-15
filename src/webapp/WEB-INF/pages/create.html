@@ -22,10 +22,17 @@
                            required>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="Password"> Password </label>
-                    <input type="text" id="Password" th:field="*{password}" th:value="*{getPassword()}"
+                    <label for="password"> Password </label>
+                    <input type="text" id="password" th:field="*{password}" th:value="*{getPassword()}"
                            placeholder="Enter Password">
                 </div>
+                <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+
+<!--                <div class="col-md-6 mb-3">-->
+<!--                    <label for="role"> ADMIN </label>-->
+<!--                    <input type="checkbox" id="role" th:field="*{roles}" th:value="*{getRoles()}"-->
+<!--                           placeholder="Enter roles">-->
+<!--                </div>-->
             </div>
 
             <br><br>

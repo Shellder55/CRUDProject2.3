@@ -40,29 +40,30 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findUserByName(username);
-        if (user == null){
-            throw new UsernameNotFoundException(String.format("User '%s' not found", username));
-        }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+//        User user = findUserByName(username);
+//        if (user == null){
+//            throw new UsernameNotFoundException(String.format("User '%s' not found", username));
+//        }
+//        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+        return userDao.findUserByName(username);
     }
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
-    }
+//    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+//        return roles.stream().map(r -> new SimpleGrantedAuthority(r.getRole())).collect(Collectors.toList());
+//    }
 
     public List<User> getUsers() {
         return userDao.getUsers();
     }
 
-    public List<User> getMyProfile(Long id){
-        return userDao.getMyProfile(id);
+    public List<User> getMyProfile(String login){
+        return userDao.getMyProfile(login);
     }
 
     public void saveUpdateUser(User user) {
         if (user.getId() == null) {
 //            if (userDao.findUserByName(user.getName()) == null){
-                user.setRoles(Collections.singleton(new Role(1L, "ADMIN")));
+//                user.setRoles(Collections.singleton(new Role(1L, "ADMIN")));
 //                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
                 userDao.saveUser(user);
 //            }

@@ -1,5 +1,6 @@
 package crud.controller;
 
+import crud.model.Role;
 import crud.model.User;
 import crud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Collections;
 
 @Controller
 @RequestMapping("/admin")
@@ -30,12 +32,16 @@ public class AdminController {
     @GetMapping("/create")
     public String newUser(@ModelAttribute("user") User user, Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("roles", Role.values());
         return "create";
     }
 
     @PostMapping()
     public String addUser(@ModelAttribute("user") User user) {
         userService.saveUpdateUser(user);
+
+        user.setRoles(Collections.singleton(Role.ADMIN));
+
         return "redirect:/admin";
     }
 

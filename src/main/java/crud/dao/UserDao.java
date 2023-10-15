@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserDao {
     List<User> getUsers();
 
-    List<User> getMyProfile(Long id);
+    List<User> getMyProfile(String login);
 
     User findUserById(Long id);
 
