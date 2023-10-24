@@ -20,8 +20,8 @@ public class UserController {
     }
 
     @GetMapping
-    public String myProfile(Model model, Principal principal, String login){
-        model.addAttribute("users", userService.getMyProfile(login));
+    public String myProfile(Model model, Principal principal) {
+        model.addAttribute("users", userService.findUserByLogin(principal.getName()));
         model.addAttribute("principalName", principal.getName());
         return "index_user";
     }

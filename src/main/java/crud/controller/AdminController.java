@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Collections;
 
 @Controller
 @RequestMapping("/admin")
@@ -25,7 +24,9 @@ public class AdminController {
     @GetMapping()
     public String allUsers(Model model, Principal principal) {
         model.addAttribute("users", userService.getUsers());
-        model.addAttribute("principalName", principal.getName());
+        if (principal.getName() != null) {
+            model.addAttribute("principalName", principal.getName());
+        }
         return "index_admin";
     }
 
@@ -37,23 +38,21 @@ public class AdminController {
     }
 
     @PostMapping()
-    public String addUser(@ModelAttribute("user") User user) {
-        userService.saveUpdateUser(user);
-
-        user.setRoles(Collections.singleton(Role.ADMIN));
-
+    public String addUser(@ModelAttribute("user") User user, @RequestParam("rolesChecked") String[] rolesStrArray) {
+        userService.saveUpdateUser(user, rolesStrArray);
         return "redirect:/admin";
     }
 
     @PutMapping("/{id}/edit")
     public String editUsers(@PathVariable(value = "id") Long id, Model model) {
         model.addAttribute("user", userService.findUserById(id));
+        model.addAttribute("roles", Role.values());
         return "create";
     }
 
     @DeleteMapping("/{id}/delete")
     public String deleteUsers(@PathVariable(value = "id") Long id) {
-        User user = userService.deleteUser(id);
+        userService.deleteUser(id);
         return "redirect:/admin";
     }
 }

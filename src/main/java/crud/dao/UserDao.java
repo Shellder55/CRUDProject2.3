@@ -9,17 +9,13 @@ import java.util.List;
 public interface UserDao {
     List<User> getUsers();
 
-    List<User> getMyProfile(String login);
-
     User findUserById(Long id);
 
-    User findUserByName(String name);
+    User findUserByLogin(String name);
 
     void saveUser(User user);
 
     void updateUser(User user);
 
     User deleteUser(Long id);
-
-
 }

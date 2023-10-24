@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Admin</title>
@@ -11,6 +10,14 @@
 <h5>&nbsp;&nbsp;&nbsp; Name:
     <td th:utext="${principalName}"></td>
 </h5>
+
+<table class="ml-4 text-center" border="2" th:width="100">
+    <tr>
+        <th><a th:href="@{/logout}"><b> Logout </b></a></th>
+    </tr>
+</table>
+
+
 <div th:align="center">
     <br>
     <table border="2" th:width="200">

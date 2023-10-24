@@ -8,16 +8,13 @@ import java.util.List;
 
 @Service
 public interface UserService extends UserDetailsService {
-
     List<User> getUsers();
-
-    List<User> getMyProfile(String login);
 
     User findUserById(Long id);
 
-    User findUserByName(String name);
+    User findUserByLogin(String name);
 
-    void saveUpdateUser(User user);
+    void saveUpdateUser(User user, String[] rolesStrArray);
 
     User deleteUser(Long id);
 }
