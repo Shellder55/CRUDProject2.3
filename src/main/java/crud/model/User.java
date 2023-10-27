@@ -4,11 +4,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Transactional
 @Table(name = "crud_users")
 public class User implements UserDetails {
     @Id
@@ -27,22 +29,21 @@ public class User implements UserDetails {
     @Column(name = "age")
     private int age;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
 
-    public User() {
-    }
+    public User() {}
 
-    public User(Long id, String name, String surname, String login, String password, String gender, int age) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
+    public User(String login, String password, String name, String surname, String gender, int age, Set<Role> roles) {
         this.login = login;
         this.password = password;
+        this.name = name;
+        this.surname = surname;
         this.gender = gender;
         this.age = age;
+        this.roles = roles;
     }
 
     public User(String name, String surname, String gender, int age) {

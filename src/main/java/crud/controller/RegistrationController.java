@@ -1,17 +1,16 @@
 package crud.controller;
 
+import crud.model.Role;
 import crud.model.User;
 import crud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/users")
@@ -24,16 +23,18 @@ public class RegistrationController {
     }
 
     @GetMapping("/login")
-    public String registration(Model model) {
+    public String registration(@ModelAttribute ("userForm") User user ,Model model) {
         model.addAttribute("userForm", new User());
         return "registration";
     }
 
     @PostMapping("/login")
-    public String addUser(@ModelAttribute("userForm") @Valid User userForm, BindingResult bindingResult) {
+    public String addUser(Set<Role> roles, @ModelAttribute("userForm") @Valid User userForm, @RequestParam(value = "error", required = false) String error, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("error", error != null);
             return "registration";
         }
+        userService.findRoles(roles);
         return "redirect:/users";
     }
 }
