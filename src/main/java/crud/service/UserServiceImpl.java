@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.TypedQuery;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -32,7 +31,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userDao.findUserByLogin(name);
     }
 
-    public User findRoles(Set<Role> roles){
+    public User findRoles(Set<Role> roles) {
         return userDao.findRoles(roles);
     }
 
@@ -47,11 +46,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     public void saveUpdateUser(User user, String[] rolesStrArray) {
         Set<Role> role = Arrays.stream(rolesStrArray).map(Role::valueOf).collect(Collectors.toSet());
+        user.setRoles(role);
         if (user.getId() == null) {
-                user.setRoles(role);
-                userDao.saveUser(user);
+            userDao.saveUser(user);
         } else {
-            user.setRoles(role);
             userDao.updateUser(user);
         }
     }

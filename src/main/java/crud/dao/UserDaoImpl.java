@@ -27,6 +27,7 @@ public class UserDaoImpl implements UserDao {
     public User findUserById(Long id) {
         return entityManager.find(User.class, id);
     }
+
     @Override
     public User findUserByLogin(String login) {
         TypedQuery<User> query = entityManager.createQuery("select u from User u where u.login = : login", User.class);
@@ -47,7 +48,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void updateUser(User user){
+    public void updateUser(User user) {
         entityManager.merge(user);
     }
 

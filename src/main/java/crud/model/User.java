@@ -4,19 +4,18 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Transactional
-@Table(name = "crud_users")
+@Table(name = "crud_users", uniqueConstraints = @UniqueConstraint(columnNames = "login"))
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "login", unique = true)
+
+    @Column(name = "login", length = 50)
     private String login;
     @Column(name = "password")
     private String password;
@@ -26,15 +25,17 @@ public class User implements UserDetails {
     private String surname;
     @Column(name = "gender")
     private String gender;
+
     @Column(name = "age")
     private int age;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
 
-    public User() {}
+    public User() {
+    }
 
     public User(String login, String password, String name, String surname, String gender, int age, Set<Role> roles) {
         this.login = login;
@@ -44,13 +45,6 @@ public class User implements UserDetails {
         this.gender = gender;
         this.age = age;
         this.roles = roles;
-    }
-
-    public User(String name, String surname, String gender, int age) {
-        this.name = name;
-        this.surname = surname;
-        this.gender = gender;
-        this.age = age;
     }
 
     public Long getId() {

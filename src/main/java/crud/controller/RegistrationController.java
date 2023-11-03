@@ -6,10 +6,8 @@ import crud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Set;
 
 @Controller
@@ -23,17 +21,13 @@ public class RegistrationController {
     }
 
     @GetMapping("/login")
-    public String registration(@ModelAttribute ("userForm") User user ,Model model) {
+    public String registration(@ModelAttribute("userForm") User user, Model model) {
         model.addAttribute("userForm", new User());
         return "registration";
     }
 
     @PostMapping("/login")
-    public String addUser(Set<Role> roles, @ModelAttribute("userForm") @Valid User userForm, @RequestParam(value = "error", required = false) String error, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("error", error != null);
-            return "registration";
-        }
+    public String addUser(Set<Role> roles) {
         userService.findRoles(roles);
         return "redirect:/users";
     }

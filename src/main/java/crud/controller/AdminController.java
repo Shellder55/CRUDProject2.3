@@ -41,7 +41,8 @@ public class AdminController {
     }
 
     @PostMapping()
-    public String addUser(@ModelAttribute("user") User user, @RequestParam("rolesChecked") String[] rolesStrArray) {
+    public String addUser(@ModelAttribute("user") User user,
+                          @RequestParam("rolesChecked") String[] rolesStrArray) {
         userService.saveUpdateUser(user, rolesStrArray);
         return "redirect:/admin";
     }

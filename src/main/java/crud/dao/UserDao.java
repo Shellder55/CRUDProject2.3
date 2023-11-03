@@ -14,6 +14,7 @@ public interface UserDao {
     User findUserById(Long id);
 
     User findUserByLogin(String name);
+
     User findRoles(Set<Role> roles);
 
     void saveUser(User user);
