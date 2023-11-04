@@ -17,19 +17,18 @@ public class User implements UserDetails {
 
     @Column(name = "login", length = 50)
     private String login;
-    @Column(name = "password")
+    @Column(name = "password", length = 50)
     private String password;
-    @Column(name = "name")
+    @Column(name = "name", length = 50)
     private String name;
-    @Column(name = "surname")
+    @Column(name = "surname", length = 50)
     private String surname;
     @Column(name = "gender")
     private String gender;
-
-    @Column(name = "age")
+    @Column(name = "age", length = 3)
     private int age;
 
-    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();

@@ -12,11 +12,11 @@ import java.util.Set;
 
 @Controller
 @RequestMapping("/users")
-public class RegistrationController {
+public class LoginController {
     private final UserService userService;
 
     @Autowired
-    public RegistrationController(UserService userService) {
+    public LoginController(UserService userService) {
         this.userService = userService;
     }
 

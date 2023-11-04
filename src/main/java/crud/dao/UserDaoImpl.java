@@ -20,7 +20,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> getUsers() {
-        return entityManager.createQuery("from User", User.class).getResultList();
+        return entityManager.createQuery("select distinct u from User u left join fetch u.roles ", User.class).getResultList();
     }
 
     @Override
@@ -30,7 +30,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User findUserByLogin(String login) {
-        TypedQuery<User> query = entityManager.createQuery("select u from User u where u.login = : login", User.class);
+        TypedQuery<User> query = entityManager.createQuery("select u from User u join fetch u.roles where u.login = : login", User.class);
         query.setParameter("login", login);
         return query.getSingleResult();
     }

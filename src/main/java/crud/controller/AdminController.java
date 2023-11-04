@@ -24,9 +24,7 @@ public class AdminController {
     @GetMapping()
     public String allUsers(Model model, Principal principal) {
         model.addAttribute("users", userService.getUsers());
-        if (principal.getName() != null) {
-            model.addAttribute("principalName", principal.getName());
-        }
+        model.addAttribute("principalName", principal.getName());
         return "index_admin";
     }
 
