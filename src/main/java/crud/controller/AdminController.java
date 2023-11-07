@@ -28,6 +28,13 @@ public class AdminController {
         return "index_admin";
     }
 
+    @GetMapping("/{id}")
+    public String getUser(@PathVariable(value = "id") Long id, Model model, Principal principal){
+        model.addAttribute("getUser", userService.getProfileUser(id));
+        model.addAttribute("principalName", principal.getName());
+        return "profile_user";
+    }
+
     @GetMapping("/create")
     public String newUser(@ModelAttribute("user") User user, Model model) {
         model.addAttribute("user", new User());

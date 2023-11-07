@@ -10,6 +10,7 @@ import java.util.Set;
 @Repository
 public interface UserDao {
     List<User> getUsers();
+    User getProfileUser(Long id);
 
     User findUserById(Long id);
 

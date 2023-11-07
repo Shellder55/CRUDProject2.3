@@ -31,7 +31,7 @@
             <th>login</th>
             <th>password</th>
         </tr>
-        <tr th:each="list : ${users}">
+        <tr th:each="list : ${user}">
             <td th:utext="${list.id}"> ID</td>
             <td th:utext="${list.name}"> Model</td>
             <td th:utext="${list.surname}"> Series</td>

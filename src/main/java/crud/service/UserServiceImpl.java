@@ -1,6 +1,7 @@
 package crud.service;
 
 import crud.dao.UserDao;
+import crud.dao.UserDaoImpl;
 import crud.model.Role;
 import crud.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     public List<User> getUsers() {
         return userDao.getUsers();
+    }
+
+    public User getProfileUser(Long id){
+        return userDao.getProfileUser(id);
     }
 
     public void saveUpdateUser(User user, String[] rolesStrArray) {

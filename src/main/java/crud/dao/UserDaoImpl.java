@@ -23,6 +23,12 @@ public class UserDaoImpl implements UserDao {
         return entityManager.createQuery("select distinct u from User u left join fetch u.roles ", User.class).getResultList();
     }
 
+    public User getProfileUser(Long id){
+        TypedQuery<User> query = entityManager.createQuery("select u from User u join fetch u.roles where u.id = : id", User.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
+    }
+
     @Override
     public User findUserById(Long id) {
         return entityManager.find(User.class, id);

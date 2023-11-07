@@ -16,6 +16,8 @@ public interface UserService extends UserDetailsService {
 
     User findUserByLogin(String name);
 
+    User getProfileUser(Long id);
+
     User findRoles(Set<Role> roles);
 
     void saveUpdateUser(User user, String[] rolesStrArray);
