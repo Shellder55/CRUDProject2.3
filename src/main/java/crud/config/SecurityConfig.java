@@ -1,6 +1,7 @@
 package crud.config;
 
 import crud.config.handler.LoginSuccessHandler;
+import crud.model.Role;
 import crud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -22,6 +23,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
+
+//    public void configure (AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception{
+//        authenticationManagerBuilder.inMemoryAuthentication()
+//                .withUser("2").password(passwordEncoder().encode("2")).authorities(Role.ADMIN);
+//    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -61,7 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 
     @Autowired

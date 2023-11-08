@@ -29,7 +29,6 @@
             <th>gender</th>
             <th>age</th>
             <th>login</th>
-            <th>password</th>
         </tr>
         <tr th:each="list : ${user}">
             <td th:utext="${list.id}"> ID</td>
@@ -38,7 +37,6 @@
             <td th:utext="${list.gender}"> ID</td>
             <td th:utext="${list.age}"> Model</td>
             <td th:utext="${list.login}"> ID</td>
-            <td th:utext="${list.password}"> Model</td>
         </tr>
     </table>
 </div>

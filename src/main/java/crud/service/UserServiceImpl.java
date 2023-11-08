@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,10 +19,12 @@ import java.util.stream.Collectors;
 @Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserDao userDao;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserDao userDao) {
+    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User findUserById(Long id) {
@@ -52,6 +55,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void saveUpdateUser(User user, String[] rolesStrArray) {
         Set<Role> role = Arrays.stream(rolesStrArray).map(Role::valueOf).collect(Collectors.toSet());
         user.setRoles(role);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         if (user.getId() == null) {
             userDao.saveUser(user);
         } else {
