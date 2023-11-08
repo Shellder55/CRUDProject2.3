@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<br><br><br><br><br><br><br><br><br>
+<div th:align="center">
+    <h3 class="ml-5">Войти</h3>
+    <br>
+    <form action="/login" method="post">
+        <input name="${_csrf.parameterName}" value="${_csrf.token}" type="hidden">
+        <div class="col-md-6 mb-3">
+            <label for="name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Name &nbsp;</label>
+            <input name="l_username" id="name" placeholder="Enter username" required/>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="password">Password &nbsp;</label>
+
+            <input name="l_password" id="password" placeholder="Enter password" required/>
+        </div>
+        <button class="btn btn-secondary" type="submit"> Войти</button>
+    </form>
+</div>
+</body>
+</html>
