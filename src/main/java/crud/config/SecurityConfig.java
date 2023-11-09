@@ -1,7 +1,6 @@
 package crud.config;
 
 import crud.config.handler.LoginSuccessHandler;
-import crud.model.Role;
 import crud.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,12 +22,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
-
-//    public void configure (AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception{
-//        authenticationManagerBuilder.inMemoryAuthentication()
-//                .withUser("2").password(passwordEncoder().encode("2")).authorities(Role.ADMIN);
-//    }
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
