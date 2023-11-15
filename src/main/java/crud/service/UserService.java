@@ -4,7 +4,6 @@ import crud.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -17,7 +16,7 @@ public interface UserService extends UserDetailsService {
 
     User getProfileUser(Long id);
 
-    void saveUpdateUser(User user, String[] rolesStrArray, Principal principal);
+    void saveUpdateUser(User user, String[] rolesStrArray);
 
     User deleteUser(Long id);
 }
