@@ -29,7 +29,7 @@ public class AdminController {
     }
 
     @GetMapping("/{id}")
-    public String getUser(@PathVariable(value = "id") Long id, Model model, Principal principal){
+    public String getUser(@PathVariable(value = "id") Long id, Model model, Principal principal) {
         model.addAttribute("getUser", userService.getProfileUser(id));
         model.addAttribute("principalName", principal.getName());
         return "profile_user";

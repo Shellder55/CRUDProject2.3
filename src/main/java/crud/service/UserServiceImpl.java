@@ -1,10 +1,10 @@
 package crud.service;
 
 import crud.dao.UserDao;
-import crud.dao.UserDaoImpl;
 import crud.model.Role;
 import crud.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,13 +36,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userDao.findUserByLogin(name);
     }
 
-    public User findRoles(Set<Role> roles) {
-        return userDao.findRoles(roles);
-    }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userDao.findUserByLogin(username);
+        try {
+            return userDao.findUserByLogin(username);
+        } catch (EmptyResultDataAccessException exp){
+            throw new NoResultException("Incorrect username or password.");
+        }
     }
 
     public List<User> getUsers() {
