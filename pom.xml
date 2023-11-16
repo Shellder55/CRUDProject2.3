@@ -6,7 +6,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.7.17</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <groupId>crud</groupId>
     <artifactId>demo</artifactId>
@@ -41,12 +41,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-        <!--		<dependency>-->
-        <!--			<groupId>org.springframework.boot</groupId>-->
-        <!--			<artifactId>spring-boot-starter-tomcat</artifactId>-->
-        <!--			<scope>provided</scope>-->
-        <!--		</dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -110,6 +104,20 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.16</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.16</version>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -128,18 +136,6 @@
             </plugins>
 
         </pluginManagement>
-        <!--		<plugins>-->
-        <!--			<plugin>-->
-        <!--				<groupId>org.apache.maven.plugins</groupId>-->
-        <!--				<artifactId>maven-compiler-plugin</artifactId>-->
-        <!--				<configuration>-->
-        <!--					<source>8</source>-->
-        <!--					<target>8</target>-->
-        <!--				</configuration>-->
-        <!--			</plugin>-->
-        <!--		</plugins>-->
-        <!--		<finalName>Spring_MVC</finalName>-->
-
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

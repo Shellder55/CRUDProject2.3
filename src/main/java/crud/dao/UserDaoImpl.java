@@ -1,14 +1,13 @@
 package crud.dao;
 
-import crud.model.Role;
 import crud.model.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import java.security.Principal;
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -40,13 +39,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findRoles(Set<Role> roles) {
-        TypedQuery<User> query = entityManager.createQuery("select u from User u join fetch u.roles where u.roles = : roles", User.class);
-        query.setParameter("roles", roles);
-        return query.getSingleResult();
-    }
-
-    @Override
     public void saveUser(User user) {
         entityManager.persist(user);
     }
@@ -57,9 +49,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User deleteUser(Long id) {
+    public void deleteUser(Long id, Principal principal) {
         User user = findUserById(id);
         entityManager.remove(user);
-        return user;
     }
 }

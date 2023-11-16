@@ -39,13 +39,13 @@
                 <div class="container text-center">
                     <div class="row align-items-center">
                         <div class="col">
+                            profile
+                        </div>
+                        <div class="col">
                             update
                         </div>
                         <div class="col">
                             delete
-                        </div>
-                        <div class="col">
-                            profile
                         </div>
                     </div>
                 </div>
@@ -62,6 +62,11 @@
                 <div class="container text-center">
                     <div class="row align-items-center">
                         <div class="col">
+                            <form th:method="GET" th:action="'admin/' + ${list.id}">
+                                <input type="submit" value="Profile">
+                            </form>
+                        </div>
+                        <div class="col">
                             <form th:method="PUT" th:action="'admin/' + ${list.id} + '/edit'">
                                 <input type="submit" value="Edit">
                             </form>
@@ -69,11 +74,6 @@
                         <div class="col">
                             <form th:method="DELETE" th:action="'admin/' + ${list.id} + '/delete'">
                                 <input type="submit" value="Delete">
-                            </form>
-                        </div>
-                        <div class="col">
-                            <form th:method="GET" th:action="'admin/' + ${list.id}">
-                                <input type="submit" value="Profile">
                             </form>
                         </div>
                     </div>
