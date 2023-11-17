@@ -33,18 +33,20 @@ public class AdminController {
 
     @GetMapping("/{id}")
     public String getUser(@PathVariable(value = "id") Long id, Model model, Principal principal) {
+        logger.info("От '" + principal.getName() + "', получен запрос на просмотр пользователя. ID пользователя: {}", id);
         model.addAttribute("getUser", userService.getProfileUser(id));
         model.addAttribute("principalName", principal.getName());
         return "profile_user";
     }
 
     @GetMapping("/create")
-    public String newUser(@ModelAttribute("user") User user, Model model) {
-        logger.info("Получен запрос на создание пользователя");
+    public String newUser(@ModelAttribute("user") User user, Model model, Principal principal) {
+        logger.info("От '" + principal.getName() + "', получен запрос на создание пользователя");
         model.addAttribute("user", new User());
         model.addAttribute("roles", Role.values());
         return "create";
     }
+
 
     @PostMapping()
     public String addUser(@ModelAttribute("user") User user,
@@ -55,8 +57,8 @@ public class AdminController {
     }
 
     @PutMapping("/{id}/edit")
-    public String editUsers(@PathVariable(value = "id") Long id, Model model) {
-        logger.info("Получен запрос на редактирование пользователя");
+    public String editUsers(@PathVariable(value = "id") Long id, Model model, Principal principal) {
+        logger.info("От '" + principal.getName() + "', получен запрос на редактирование пользователя. ID пользователя: {}", id);
         model.addAttribute("user", userService.findUserById(id));
         model.addAttribute("roles", Role.values());
         return "create";
@@ -64,6 +66,7 @@ public class AdminController {
 
     @DeleteMapping("/{id}/delete")
     public String deleteUsers(@PathVariable(value = "id") Long id, Principal principal) {
+        logger.info("От '" + principal.getName() + "', получен запрос на удаление пользователя. ID пользователя: {}", id);
         userService.deleteUser(id, principal);
         return "redirect:/admin";
     }

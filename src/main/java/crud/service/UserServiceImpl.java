@@ -38,10 +38,10 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     public User findUserById(Long id) {
         try {
             user = userDao.findUserById(id);
-            logger.info("Пользователь по ID: '" + user.getId() + "' с ролью " + user.getRoles() + " найден!");
+            logger.info("Пользователь по ID: '" + user.getId() + "' с ролью: " + user.getRoles() + " найден!");
             return user;
         } catch (Exception exception) {
-            logger.error("Пользователь по ID не найден");
+            logger.error("Пользователь по ID не найден. ID пользователя: {}", id);
             throw new NoResultException("User not found by ID");
         }
     }
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
             logger.info("Пользователь по логину '" + user.getLogin() + "' с ролью " + user.getRoles() + " найден!");
             return user;
         } catch (Exception exception) {
-            logger.error("Пользователь по логину не найден");
+            logger.error("Пользователь по логину не найден. Логин пользователя: {} ", name);
             throw new NoResultException("User not found by login");
         }
     }
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
             logger.info("Пользователь '" + user.getLogin() + "' с ролью " + user.getRoles() + " найден!");
             return user;
         } catch (EmptyResultDataAccessException exp) {
-            logger.error("Введен неверно логин или пароль: username - {}", username);
+            logger.error("Введен неверно логин или пароль: username: {}", username);
             throw new InternalAuthenticationServiceException("User not found");
         }
     }
@@ -124,9 +124,9 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     public void deleteUser(Long id, Principal principal) {
         try {
             userDao.deleteUser(id, principal);
-            logger.info("Администатор '" + principal.getName() + "' удалил пользователя. ID: " + id);
+            logger.info("Администатор '" + principal.getName() + "' удалил пользователя. ID: {}", id);
         } catch (Exception exception) {
-            logger.error("Администатор '" + principal.getName() + "' не смог удалил пользователя. ID: + " + id);
+            logger.error("Администатор '" + principal.getName() + "' не смог удалил пользователя. ID: {}", id);
         }
     }
 }
