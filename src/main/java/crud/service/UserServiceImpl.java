@@ -86,10 +86,10 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     public User getProfileUser(Long id) {
         try {
             user = userDao.getProfileUser(id);
-            logger.info("Получение профиля пользователя по ID: '" + id + "' прошло удачно");
+            logger.info("Получение профиля пользователя по ID: {}'", id + "' прошло удачно");
             return user;
         } catch (Exception exception) {
-            logger.info("Не удалось получить профиль пользователя по ID: '" + id + "'");
+            logger.info("Не удалось получить профиль пользователя по ID: {}'", id + "'");
             throw new NoResultException("Failed to retrieve user profile by ID");
         }
     }
