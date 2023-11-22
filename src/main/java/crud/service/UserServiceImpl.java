@@ -17,7 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import java.security.Principal;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,8 +76,9 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     @Override
     public List<User> getUsers() {
         try {
-            List<User> user = userDao.getUsers();
+            List<User> user = userDao.getUsers().stream().sorted(Comparator.comparing(User::getId)).toList();
             logger.info("Загрузка всех пользователей прошла успешно!");
+            System.out.println(user);
             return user;
         } catch (Exception exception) {
             logger.info("Не удалось загрузить всех пользователей");
