@@ -22,8 +22,8 @@ public class UserDao {
     }
 
     public User findUserById(Long id) {
-        Optional<User> getUser = userRepository.findById(id);
-        return getUser.orElse(null);
+        Optional<User> findUser = userRepository.findById(id);
+        return findUser.orElse(null);
     }
 
     public User findUserByLogin(String name) {
