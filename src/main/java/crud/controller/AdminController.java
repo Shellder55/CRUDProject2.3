@@ -26,6 +26,7 @@ public class AdminController {
 
     @GetMapping()
     public String allUsers(Model model, Principal principal) {
+        logger.info("От '" + principal.getName() + "', получен запрос на загрузку всех пользователей.");
         model.addAttribute("users", userService.getUsers());
         model.addAttribute("principalName", principal.getName());
         return "index_admin";
@@ -52,6 +53,7 @@ public class AdminController {
     public String addUser(@ModelAttribute("user") User user,
                           @RequestParam("rolesChecked") String[] rolesStrArray,
                           Principal principal) {
+        logger.info("От '" + principal.getName() + "', получен запрос на пользователя. ID пользователя: {}");
         userService.saveUpdateUser(user, rolesStrArray, principal);
         return "redirect:/admin";
     }

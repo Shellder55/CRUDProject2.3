@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService, UserDetailsService{
+public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserDao userDao;
     private static User user;
     private final PasswordEncoder passwordEncoder;
@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     public User findUserById(Long id) {
         try {
             user = userDao.findUserById(id);
-            logger.info("Пользователь по ID: '" + user.getId() + "' с ролью: " + user.getRoles() + " найден!");
+            logger.info("Пользователь по ID: '{}' с ролью: {} найден!", user.getId(), user.getRoles());
             return user;
         } catch (Exception exception) {
             logger.error("Пользователь по ID не найден. ID пользователя: {}", id);
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     public User findUserByLogin(String name) {
         try {
             user = userDao.findUserByLogin(name);
-            logger.info("Пользователь по логину '" + user.getLogin() + "' с ролью " + user.getRoles() + " найден!");
+            logger.info("Пользователь по логину '{}' с ролью '{}' найден!", user.getLogin(), user.getRoles());
             return user;
         } catch (Exception exception) {
             logger.error("Пользователь по логину не найден. Логин пользователя: {} ", name);
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
             user = userDao.findUserByLogin(username);
-            logger.info("Пользователь '" + user.getLogin() + "' с ролью " + user.getRoles() + " найден!");
+            logger.info("Пользователь '{}' с ролью '{}' найден!", user.getLogin(), user.getRoles());
             return user;
         } catch (EmptyResultDataAccessException exp) {
             logger.error("Введен неверно логин или пароль: username: {}", username);
@@ -78,7 +78,6 @@ public class UserServiceImpl implements UserService, UserDetailsService{
         try {
             List<User> user = userDao.getUsers().stream().sorted(Comparator.comparing(User::getId)).toList();
             logger.info("Загрузка всех пользователей прошла успешно!");
-            System.out.println(user);
             return user;
         } catch (Exception exception) {
             logger.info("Не удалось загрузить всех пользователей");
@@ -89,11 +88,11 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     @Override
     public User getProfileUser(Long id) {
         try {
-            user = userDao.getProfileUser(id);
-            logger.info("Получение профиля пользователя по ID: {}'", id + "' прошло удачно");
+            user = userDao.findUserById(id);
+            logger.info("Получение профиля пользователя по ID: '{}', прошло удачно", id);
             return user;
         } catch (Exception exception) {
-            logger.info("Не удалось получить профиль пользователя по ID: {}'", id + "'");
+            logger.info("Не удалось получить профиль пользователя по ID: '{}'", id);
             throw new NoResultException("Failed to retrieve user profile by ID");
         }
     }
@@ -107,16 +106,16 @@ public class UserServiceImpl implements UserService, UserDetailsService{
             if (user.getId() == null) {
                 try {
                     userDao.saveUser(user);
-                    logger.info("Администатор '" + principal.getName() + "' добавил пользователя. ID: " + user.getId() + ". Роль: " + Arrays.toString(rolesStrArray));
+                    logger.info("Администатор '{}' добавил пользователя. ID: {}. Роль: {}", principal.getName(), user.getId(), Arrays.toString(rolesStrArray));
                 } catch (Exception exception) {
-                    logger.error("Администатор '" + principal.getName() + "' не смог добавить пользователя");
+                    logger.error("Администатор '{}' не смог добавить пользователя", principal.getName());
                 }
             } else {
                 try {
                     userDao.updateUser(user);
-                    logger.info("Администатор '" + principal.getName() + "' изменил данные у пользователя. ID: " + user.getId());
+                    logger.info("Администатор '{}' изменил данные у пользователя. ID: {}", principal.getName(), user.getId());
                 } catch (Exception exception) {
-                    logger.error("Администатор '" + principal.getName() + "' не смог изменить данные у пользователя. ID: " + user.getId());
+                    logger.error("Администатор '{}' не смог изменить данные у пользователя. ID: {}", principal.getName(), user.getId());
                 }
             }
         } catch (Exception exception) {
@@ -127,10 +126,10 @@ public class UserServiceImpl implements UserService, UserDetailsService{
     @Override
     public void deleteUser(Long id, Principal principal) {
         try {
-            userDao.deleteUser(id, principal);
-            logger.info("Администатор '" + principal.getName() + "' удалил пользователя. ID: {}", id);
+            userDao.deleteUser(id);
+            logger.info("Администатор '{}' удалил пользователя. ID: {}", principal.getName(), id);
         } catch (Exception exception) {
-            logger.error("Администатор '" + principal.getName() + "' не смог удалил пользователя. ID: {}", id);
+            logger.error("Администатор '{}' не смог удалил пользователя. ID: {}", principal.getName(), id);
         }
     }
 }

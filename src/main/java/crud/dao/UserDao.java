@@ -1,23 +1,44 @@
 package crud.dao;
 
 import crud.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface UserDao {
-    List<User> getUsers();
-    User getProfileUser(Long id);
+public class UserDao {
 
-    User findUserById(Long id);
+    private final UserRepository userRepository;
 
-    User findUserByLogin(String name);
+    @Autowired
+    public UserDao(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-    void saveUser(User user);
+    public List<User> getUsers() {
+        return (List<User>) userRepository.findAll();
+    }
 
-    void updateUser(User user);
+    public User findUserById(Long id) {
+        Optional<User> getUser = userRepository.findById(id);
+        return getUser.orElse(null);
+    }
 
-    void deleteUser(Long id, Principal principal);
+    public User findUserByLogin(String name) {
+        return userRepository.findUserByLogin(name);
+    }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
+    public void updateUser(User user) {
+        userRepository.save(user);
+    }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
 }
