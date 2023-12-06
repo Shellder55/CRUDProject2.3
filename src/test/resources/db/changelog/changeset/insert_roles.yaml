@@ -1,0 +1,24 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-roles
+      author: Vitaliy
+      comment: "Create 2 user roles"
+      changes:
+        - insert:
+            tableName: user_role
+            columns:
+              - column:
+                  name: roles
+                  value: "ADMIN"
+        - insert:
+            tableName: user_role
+            columns:
+              - column:
+                  name: roles
+                  value: "USER"
+        - insert:
+            tableName: user_role
+            columns:
+              - column:
+                  name: roles
+                  value: "ADMIN"
