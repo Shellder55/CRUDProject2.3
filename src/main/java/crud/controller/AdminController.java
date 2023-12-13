@@ -52,7 +52,7 @@ public class AdminController {
     @PostMapping()
     public String addUser(@ModelAttribute("user") User user,
                           @RequestParam("rolesChecked") String[] rolesStrArray,
-                          Principal principal) {
+                          Principal principal) throws Exception {
         logger.info("От '{}', получен запрос на пользователя. ID пользователя: {}", principal.getName(), user.getId());
         userService.saveUpdateUser(user, rolesStrArray, principal);
         return "redirect:/admin";

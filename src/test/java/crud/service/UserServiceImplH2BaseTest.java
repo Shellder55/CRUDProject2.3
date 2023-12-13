@@ -1,6 +1,6 @@
 package crud.service;
 
-import config.PrincipalImplement;
+import config.PrincipalForTest;
 import crud.dao.UserRepository;
 import crud.model.Role;
 import crud.model.User;
@@ -19,14 +19,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @Transactional
-class UserServiceImplTest extends PrincipalImplement {
-    PrincipalImplement principal = new PrincipalImplement();
+class UserServiceImplH2BaseTest extends PrincipalForTest {
+    PrincipalForTest principal = new PrincipalForTest();
     UserService userService;
     UserRepository userRepository;
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImplTest(UserService userService, UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImplH2BaseTest(UserService userService, UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -129,7 +129,7 @@ class UserServiceImplTest extends PrincipalImplement {
     }
 
     @Test
-    void saveUser() {
+    void saveUser() throws Exception{
         // given
         User user = firstUser();
         User expectedUser = expectedUsersMethod().get(3);
@@ -142,10 +142,9 @@ class UserServiceImplTest extends PrincipalImplement {
     }
 
     @Test
-    void updateUser() {
+    void updateUser() throws Exception {
         // given
-        User user = userRepository.findById(3L).get();
-        user = firstUser();
+        User user = firstUser();
         user.setId(3L);
         User expectedUser = expectedUsersMethod().get(3);
         expectedUser.setId(3L);
