@@ -17,7 +17,7 @@ public interface UserService extends UserDetailsService {
 
     User getProfileUser(Long id);
 
-    void saveUpdateUser(User user, String[] rolesStrArray, Principal principal);
+    void saveUpdateUser(User user, String[] rolesStrArray, Principal principal) throws Exception;
 
     void deleteUser(Long id, Principal principal);
 }

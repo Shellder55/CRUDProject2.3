@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-user-table
+      author: Vitaliy
+      changes:
+        - createTable:
+            tableName: crud_users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: int
+                  constraints:
+                    nullable: true
+              - column:
+                  name: age
+                  type: int
+                  defaultOnNull: true
+              - column:
+                  name: gender
+                  type: varchar(50)
+                  defaultOnNull: true
+              - column:
+                  name: login
+                  type: varchar(50)
+                  defaultOnNull: true
+              - column:
+                  name: name
+                  type: varchar(50)
+                  defaultOnNull: true
+                  constraints:
+                    unique: true
+              - column:
+                  name: password
+                  type: varchar(70)
+                  defaultOnNull: true
+              - column:
+                  name: surname
+                  type: varchar(50)
+                  defaultOnNull: true
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableName: crud_users
+            constraintName: fk_author_id
+            referencedColumnNames: user_id
+            referencedTableName: user_role
+
