@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public void saveUpdateUser(User user, String[] rolesStrArray, Principal principal) {
+    public void saveUpdateUser(User user, String[] rolesStrArray, Principal principal) throws Exception {
         try {
             Set<Role> role = Arrays.stream(rolesStrArray).map(Role::valueOf).collect(Collectors.toSet());
             user.setRoles(role);
@@ -119,7 +119,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 }
             }
         } catch (Exception exception) {
-            logger.error("Что-то пошло не так");
+            logger.error("Что-то пошло не так при добавление/изменение пользователя");
+            throw new Exception("Something went wrong when adding/modifying a user");
         }
     }
 
@@ -129,7 +130,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             userDao.deleteUser(id);
             logger.info("Администатор '{}' удалил пользователя. ID: {}", principal.getName(), id);
         } catch (Exception exception) {
-            logger.error("Администатор '{}' не смог удалил пользователя. ID: {}", principal.getName(), id);
+            logger.error("Администатор '{}' не смог удалить пользователя. ID: {}", principal.getName(), id);
         }
     }
 }

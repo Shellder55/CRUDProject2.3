@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -17,7 +18,7 @@ public class User implements UserDetails {
 
     @Column(name = "login", length = 50)
     private String login;
-    @Column(name = "password", length = 50)
+    @Column(name = "password", length = 70)
     private String password;
     @Column(name = "name", length = 50)
     private String name;
@@ -37,6 +38,17 @@ public class User implements UserDetails {
     }
 
     public User(String login, String password, String name, String surname, String gender, int age, Set<Role> roles) {
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.gender = gender;
+        this.age = age;
+        this.roles = roles;
+    }
+
+    public User(Long id, String login, String password, String name, String surname, String gender, int age, Set<Role> roles) {
+        this.id = id;
         this.login = login;
         this.password = password;
         this.name = name;
@@ -139,5 +151,32 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return age == user.age && Objects.equals(id, user.id) && Objects.equals(login, user.login) && Objects.equals(password, user.password) && Objects.equals(name, user.name) && Objects.equals(surname, user.surname) && Objects.equals(gender, user.gender) && Objects.equals(roles, user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, login, password, name, surname, gender, age, roles);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", gender='" + gender + '\'' +
+                ", age=" + age +
+                ", roles=" + roles +
+                '}';
     }
 }
