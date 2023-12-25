@@ -1,5 +1,6 @@
 package crud.service;
 
+import crud.model.Response;
 import crud.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,8 @@ import java.util.List;
 @Service
 public interface UserService extends UserDetailsService {
     List<User> getUsers();
+
+    Response getUserForStatistic();
 
     User findUserById(Long id);
 

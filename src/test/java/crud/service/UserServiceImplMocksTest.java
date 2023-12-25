@@ -28,7 +28,7 @@ class UserServiceImplMocksTest {
     PrincipalForTest principal = new PrincipalForTest();
     UserDao userDao = Mockito.mock(UserDao.class);
     PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    UserService userService = new UserServiceImpl(userDao, passwordEncoder);
+    UserService userService = new UserServiceImpl(userDao, passwordEncoder, null);
 
     public String[] roleArraysAdmin() {
         return new String[]{"ADMIN"};

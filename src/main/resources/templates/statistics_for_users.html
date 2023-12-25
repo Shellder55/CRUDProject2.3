@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<br>
+<table class="ml-4 text-center" border="2" th:width="100">
+    <tr>
+        <th><a th:href="@{/logout}"><b> Logout </b></a></th>
+    </tr>
+</table>
+
+<table class="ml-4 mt-2 text-center" border="2" th:width="100">
+    <tr>
+        <th><a th:href="@{/admin}"><b> Return </b></a></th>
+    </tr>
+</table>
+
+<div th:align="center">
+    <br>
+
+</div>
+<br><br>
+<div th:align="center">
+
+    <table class="text-center" border="2" th:width="350">
+        <tr>
+            <th> Count of registered users</th>
+            <td th:utext="${stats.getCountOfRegisteredUsers()}" th:width="100"></td>
+        </tr>
+
+        <tr>
+            <th> getAverageAge</th>
+            <td th:utext="${stats.getAverageAge()}" th:width="100"></td>
+        </tr>
+
+        <tr>
+            <th> getCountOfFemales</th>
+            <td th:utext="${stats.getCountOfFemales()}" th:width="100"></td>
+        </tr>
+
+        <tr>
+            <th> getCountOfMales</th>
+            <td th:utext="${stats.getCountOfMales()}" th:width="100"></td>
+        </tr>
+
+    </table>
+</div>
+</body>
+</html>
