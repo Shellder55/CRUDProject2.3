@@ -39,7 +39,7 @@ public class AdminController {
     @GetMapping("/statistics")
     @ApiOperation("Статистика")
     public String statistic(Model model){
-        model.addAttribute("stats", userService.getUserForStatistic());
+        model.addAttribute("stats", userService.getUserStatistics());
         return "statistics_for_users";
     }
 

@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         this.webClient = webClient;
     }
 
-    public Response getUserForStatistic() {
+    public Response getUserStatistics() {
         return webClient.get().retrieve().bodyToMono(Response.class).block();
     }
 

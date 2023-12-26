@@ -12,7 +12,7 @@ import java.util.List;
 public interface UserService extends UserDetailsService {
     List<User> getUsers();
 
-    Response getUserForStatistic();
+    Response getUserStatistics();
 
     User findUserById(Long id);
 
