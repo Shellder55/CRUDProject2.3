@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @Transactional
-class UserServiceImplH2BaseTest extends PrincipalForTest {
+class UserServiceImplH2BaseTest {
     PrincipalForTest principal = new PrincipalForTest();
     UserService userService;
     UserRepository userRepository;
