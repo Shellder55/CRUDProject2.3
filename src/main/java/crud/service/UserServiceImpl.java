@@ -1,7 +1,7 @@
 package crud.service;
 
 import crud.dao.UserDao;
-import crud.model.Response;
+import crud.model.RestStatisticsResponse;
 import crud.model.Role;
 import crud.model.User;
 import org.slf4j.Logger;
@@ -41,8 +41,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         this.webClient = webClient;
     }
 
-    public Response getUserStatistics() {
-        return webClient.get().retrieve().bodyToMono(Response.class).block();
+    @Override
+    public RestStatisticsResponse getUserStatistics() {
+        return webClient.get().uri("rest/v1/statistics").retrieve().bodyToMono(RestStatisticsResponse.class).block();
     }
 
     @Override

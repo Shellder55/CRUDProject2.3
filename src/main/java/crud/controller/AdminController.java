@@ -36,8 +36,8 @@ public class AdminController {
         return "index_admin";
     }
 
-    @GetMapping("/statistics")
-    @ApiOperation("Статистика")
+    @GetMapping("/rest/v1/statistics")
+    @ApiOperation("Статистика всех пользователей")
     public String statistic(Model model){
         model.addAttribute("stats", userService.getUserStatistics());
         return "statistics_for_users";

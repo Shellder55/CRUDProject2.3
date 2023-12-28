@@ -27,7 +27,7 @@ public class User implements UserDetails {
     @Column(name = "gender")
     private String gender;
     @Column(name = "age", length = 3)
-    private int age;
+    private Integer age;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.LAZY)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
@@ -37,7 +37,7 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String login, String password, String name, String surname, String gender, int age, Set<Role> roles) {
+    public User(String login, String password, String name, String surname, String gender, Integer age, Set<Role> roles) {
         this.login = login;
         this.password = password;
         this.name = name;
@@ -47,7 +47,7 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public User(Long id, String login, String password, String name, String surname, String gender, int age, Set<Role> roles) {
+    public User(Long id, String login, String password, String name, String surname, String gender, Integer age, Set<Role> roles) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -103,15 +103,15 @@ public class User implements UserDetails {
         return gender;
     }
 
-    public void setGender(String sex) {
-        this.gender = sex;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
