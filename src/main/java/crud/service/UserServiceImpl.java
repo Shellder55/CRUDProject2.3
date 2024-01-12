@@ -1,7 +1,7 @@
 package crud.service;
 
 import crud.dao.UserDao;
-import crud.model.RestStatisticsResponse;
+import crud.dto.RestStatisticsResponse;
 import crud.model.Role;
 import crud.model.User;
 import org.slf4j.Logger;

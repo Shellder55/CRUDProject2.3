@@ -12,7 +12,7 @@ import java.security.Principal;
 
 @Controller
 @RequestMapping("/users")
-@Api
+@Api("Права пользователя")
 public class UserController {
     private final UserService userService;
 

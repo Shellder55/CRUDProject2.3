@@ -26,6 +26,8 @@
 <br><br>
 <div th:align="center">
 
+    <h3> Statistics on all users </h3>
+    <br><br>
     <table class="text-center" border="2" th:width="350">
         <tr>
             <th> Count of registered users</th>
@@ -33,20 +35,18 @@
         </tr>
 
         <tr>
-            <th> getAverageAge</th>
+            <th> Average age</th>
             <td th:utext="${stats.getAverageAge()}" th:width="100"></td>
         </tr>
 
         <tr>
-            <th> getCountOfFemales</th>
+            <th> Count of females</th>
             <td th:utext="${stats.getCountOfFemales()}" th:width="100"></td>
         </tr>
-
         <tr>
-            <th> getCountOfMales</th>
+            <th> Count of males</th>
             <td th:utext="${stats.getCountOfMales()}" th:width="100"></td>
         </tr>
-
     </table>
 </div>
 </body>

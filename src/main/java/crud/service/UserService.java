@@ -1,6 +1,6 @@
 package crud.service;
 
-import crud.model.RestStatisticsResponse;
+import crud.dto.RestStatisticsResponse;
 import crud.model.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;

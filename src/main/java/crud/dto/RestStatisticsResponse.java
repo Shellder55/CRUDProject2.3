@@ -1,4 +1,4 @@
-package crud.model;
+package crud.dto;
 
 public class RestStatisticsResponse {
 

@@ -17,7 +17,7 @@ import java.security.Principal;
 
 @Controller
 @RequestMapping("/admin")
-@Api
+@Api("Права администратора")
 public class AdminController {
     private final UserService userService;
     private final static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class.getName());
