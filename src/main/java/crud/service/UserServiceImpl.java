@@ -4,9 +4,9 @@ import crud.dao.UserDao;
 import crud.dto.RestStatisticsResponse;
 import crud.model.Role;
 import crud.model.User;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,19 +26,13 @@ import java.util.stream.Collectors;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 @Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserDao userDao;
     private static User user;
     private final PasswordEncoder passwordEncoder;
     private final WebClient webClient;
-
-    @Autowired
-    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder, WebClient webClient) {
-        this.userDao = userDao;
-        this.passwordEncoder = passwordEncoder;
-        this.webClient = webClient;
-    }
 
     @SneakyThrows
     @Override
@@ -79,7 +73,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     @SneakyThrows
-    public UserDetails loadUserByUsername(String username){
+    public UserDetails loadUserByUsername(String username) {
         try {
             user = userDao.findUserByLogin(username);
             log.info("Пользователь '{}' с ролью '{}' найден!", user.getLogin(), user.getRoles());

@@ -1,21 +1,17 @@
 package crud.dao;
 
 import crud.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
+@RequiredArgsConstructor
 public class UserDao {
 
     private final UserRepository userRepository;
-
-    @Autowired
-    public UserDao(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
     public List<User> getUsers() {
         return userRepository.findAll();

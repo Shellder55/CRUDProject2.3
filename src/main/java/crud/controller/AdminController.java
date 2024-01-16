@@ -5,8 +5,8 @@ import crud.model.User;
 import crud.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +17,9 @@ import java.security.Principal;
 @RequestMapping("/admin")
 @Api("Права администратора")
 @Slf4j
+@RequiredArgsConstructor
 public class AdminController {
     private final UserService userService;
-
-    @Autowired
-    public AdminController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping()
     @ApiOperation("Получение списка всех пользователей")
@@ -36,7 +32,7 @@ public class AdminController {
 
     @GetMapping("/rest/v1/statistics")
     @ApiOperation("Статистика всех пользователей")
-    public String statistic(Model model, Principal principal){
+    public String statistic(Model model, Principal principal) {
         log.info("От '{}', получен запрос на просмотр статистики по всем пользователям", principal.getName());
         model.addAttribute("stats", userService.getUserStatistics());
         return "statistics_for_users";
