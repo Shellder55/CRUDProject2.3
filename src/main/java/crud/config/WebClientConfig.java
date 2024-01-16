@@ -10,5 +10,4 @@ public class WebClientConfig {
     public WebClient webClient() {
         return WebClient.builder().baseUrl("http://localhost:8090/").build();
     }
-
 }

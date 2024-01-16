@@ -2,6 +2,7 @@ package crud.config;
 
 import crud.config.handler.LoginSuccessHandler;
 import crud.service.UserService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,8 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.userService = userService;
     }
 
+    @SneakyThrows
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity http) {
         http.formLogin()
                 //указываем логику обработки при логине
                 .successHandler(new LoginSuccessHandler())
@@ -57,8 +59,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @SneakyThrows
     @Autowired
-    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configureGlobal(AuthenticationManagerBuilder auth) {
         auth
                 .userDetailsService(userService)
                 .passwordEncoder(passwordEncoder());

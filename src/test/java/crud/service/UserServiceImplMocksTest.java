@@ -80,7 +80,7 @@ class UserServiceImplMocksTest {
     void findUserByLogin() {
         // given
         String expectedUserLogin = expectedUsersMethod().get(0).getLogin();
-        User actualUser = new User("Login1", "ActualPassword", "ActualName", "ActualSurname",
+        User actualUser = new User (1L,  "Login1", "ActualPassword", "ActualName", "ActualSurname",
                 "ActualMale", 21, Collections.singleton(Role.ADMIN));
         Mockito.lenient().when(userDao.findUserByLogin("Login1")).thenReturn(actualUser);
         // when
@@ -107,7 +107,7 @@ class UserServiceImplMocksTest {
     @Test
     void saveUser() {
         // given
-        User actualUser = new User("Login4", "Password4", "Name4", "Surname4",
+        User actualUser = new User(null, "Login4", "Password4", "Name4", "Surname4",
                 "Gender4", 24, Collections.singleton(Role.ADMIN));
         // when
         Mockito.lenient().doNothing().when(userDao).saveUser(actualUser);
@@ -118,7 +118,7 @@ class UserServiceImplMocksTest {
 
     @Test
     void saveUserThrowException() {
-        User actualUser = new User("Login4", null, "Name4", "Surname4",
+        User actualUser = new User(1L, "Login4", null, "Name4", "Surname4",
                 "Gender4", 24, Collections.singleton(Role.ADMIN));
         // then
         assertThrows(Exception.class, () -> userService.saveUpdateUser(actualUser, roleArraysAdmin(), principal));
