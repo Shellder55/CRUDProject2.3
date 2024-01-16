@@ -4,14 +4,13 @@ import crud.dao.UserDao;
 import crud.dto.RestStatisticsResponse;
 import crud.model.Role;
 import crud.model.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,34 +25,36 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 @Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserDao userDao;
     private static User user;
     private final PasswordEncoder passwordEncoder;
     private final WebClient webClient;
-    private final static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class.getName());
 
-    @Autowired
-    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder, WebClient webClient) {
-        this.userDao = userDao;
-        this.passwordEncoder = passwordEncoder;
-        this.webClient = webClient;
-    }
-
+    @SneakyThrows
     @Override
     public RestStatisticsResponse getUserStatistics() {
-        return webClient.get().uri("rest/v1/statistics").retrieve().bodyToMono(RestStatisticsResponse.class).block();
+        try {
+            RestStatisticsResponse restStatisticsResponse = webClient.get().uri("rest/v1/statistics").retrieve().bodyToMono(RestStatisticsResponse.class).block();
+            log.info("Загрузка статистики по всем пользователям прошла успешна");
+            return restStatisticsResponse;
+        } catch (Exception exception) {
+            log.error("Не удалось загрузить статистику по всем пользователям");
+            throw new Exception("Failed to load statistics for all users");
+        }
     }
 
     @Override
     public User findUserById(Long id) {
         try {
             user = userDao.findUserById(id);
-            logger.info("Пользователь по ID: '{}' с ролью: {} найден!", user.getId(), user.getRoles());
+            log.info("Пользователь по ID: '{}' с ролью: {} найден!", user.getId(), user.getRoles());
             return user;
         } catch (Exception exception) {
-            logger.error("Пользователь по ID не найден. ID пользователя: {}", id);
+            log.error("Пользователь по ID не найден. ID пользователя: {}", id);
             throw new NoResultException("User not found by ID");
         }
     }
@@ -62,22 +63,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User findUserByLogin(String name) {
         try {
             user = userDao.findUserByLogin(name);
-            logger.info("Пользователь по логину '{}' с ролью '{}' найден!", user.getLogin(), user.getRoles());
+            log.info("Пользователь по логину '{}' с ролью '{}' найден!", user.getLogin(), user.getRoles());
             return user;
         } catch (Exception exception) {
-            logger.error("Пользователь по логину не найден. Логин пользователя: {} ", name);
+            log.error("Пользователь по логину не найден. Логин пользователя: {} ", name);
             throw new NoResultException("User not found by login");
         }
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    @SneakyThrows
+    public UserDetails loadUserByUsername(String username) {
         try {
             user = userDao.findUserByLogin(username);
-            logger.info("Пользователь '{}' с ролью '{}' найден!", user.getLogin(), user.getRoles());
+            log.info("Пользователь '{}' с ролью '{}' найден!", user.getLogin(), user.getRoles());
             return user;
         } catch (EmptyResultDataAccessException exp) {
-            logger.error("Введен неверно логин или пароль: username: {}", username);
+            log.error("Введен неверно логин или пароль: username: {}", username);
             throw new InternalAuthenticationServiceException("User not found");
         }
     }
@@ -86,10 +88,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public List<User> getUsers() {
         try {
             List<User> user = userDao.getUsers().stream().sorted(Comparator.comparing(User::getId)).toList();
-            logger.info("Загрузка всех пользователей прошла успешно!");
+            log.info("Загрузка всех пользователей прошла успешно!");
             return user;
         } catch (Exception exception) {
-            logger.info("Не удалось загрузить всех пользователей");
+            log.info("Не удалось загрузить всех пользователей");
             throw new NoResultException("Failed to load all users");
         }
     }
@@ -98,16 +100,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User getProfileUser(Long id) {
         try {
             user = userDao.findUserById(id);
-            logger.info("Получение профиля пользователя по ID: '{}', прошло удачно", id);
+            log.info("Получение профиля пользователя по ID: '{}', прошло удачно", id);
             return user;
         } catch (Exception exception) {
-            logger.info("Не удалось получить профиль пользователя по ID: '{}'", id);
+            log.info("Не удалось получить профиль пользователя по ID: '{}'", id);
             throw new NoResultException("Failed to retrieve user profile by ID");
         }
     }
 
+    @SneakyThrows
     @Override
-    public void saveUpdateUser(User user, String[] rolesStrArray, Principal principal) throws Exception {
+    public void saveUpdateUser(User user, String[] rolesStrArray, Principal principal) {
         try {
             Set<Role> role = Arrays.stream(rolesStrArray).map(Role::valueOf).collect(Collectors.toSet());
             user.setRoles(role);
@@ -115,20 +118,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             if (user.getId() == null) {
                 try {
                     userDao.saveUser(user);
-                    logger.info("Администатор '{}' добавил пользователя. ID: {}. Роль: {}", principal.getName(), user.getId(), Arrays.toString(rolesStrArray));
+                    log.info("Администатор '{}' добавил пользователя. ID: {}. Роль: {}", principal.getName(), user.getId(), Arrays.toString(rolesStrArray));
                 } catch (Exception exception) {
-                    logger.error("Администатор '{}' не смог добавить пользователя", principal.getName());
+                    log.error("Администатор '{}' не смог добавить пользователя", principal.getName());
                 }
             } else {
                 try {
                     userDao.updateUser(user);
-                    logger.info("Администатор '{}' изменил данные у пользователя. ID: {}", principal.getName(), user.getId());
+                    log.info("Администатор '{}' изменил данные у пользователя. ID: {}", principal.getName(), user.getId());
                 } catch (Exception exception) {
-                    logger.error("Администатор '{}' не смог изменить данные у пользователя. ID: {}", principal.getName(), user.getId());
+                    log.error("Администатор '{}' не смог изменить данные у пользователя. ID: {}", principal.getName(), user.getId());
                 }
             }
         } catch (Exception exception) {
-            logger.error("Что-то пошло не так при добавление/изменение пользователя");
+            log.error("Что-то пошло не так при добавление/изменение пользователя");
             throw new Exception("Something went wrong when adding/modifying a user");
         }
     }
@@ -137,9 +140,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void deleteUser(Long id, Principal principal) {
         try {
             userDao.deleteUser(id);
-            logger.info("Администатор '{}' удалил пользователя. ID: {}", principal.getName(), id);
+            log.info("Администатор '{}' удалил пользователя. ID: {}", principal.getName(), id);
         } catch (Exception exception) {
-            logger.error("Администатор '{}' не смог удалить пользователя. ID: {}", principal.getName(), id);
+            log.error("Администатор '{}' не смог удалить пользователя. ID: {}", principal.getName(), id);
         }
     }
 }
