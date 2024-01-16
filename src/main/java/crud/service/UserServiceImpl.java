@@ -1,6 +1,7 @@
 package crud.service;
 
 import crud.dao.UserDao;
+import crud.dto.RestStatisticsResponse;
 import crud.model.Role;
 import crud.model.User;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.persistence.NoResultException;
 import java.security.Principal;
@@ -29,12 +31,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserDao userDao;
     private static User user;
     private final PasswordEncoder passwordEncoder;
+    private final WebClient webClient;
     private final static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class.getName());
 
     @Autowired
-    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserDao userDao, PasswordEncoder passwordEncoder, WebClient webClient) {
         this.userDao = userDao;
         this.passwordEncoder = passwordEncoder;
+        this.webClient = webClient;
+    }
+
+    @Override
+    public RestStatisticsResponse getUserStatistics() {
+        return webClient.get().uri("rest/v1/statistics").retrieve().bodyToMono(RestStatisticsResponse.class).block();
     }
 
     @Override

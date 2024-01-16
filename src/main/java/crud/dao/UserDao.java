@@ -18,12 +18,12 @@ public class UserDao {
     }
 
     public List<User> getUsers() {
-        return (List<User>) userRepository.findAll();
+        return userRepository.findAll();
     }
 
     public User findUserById(Long id) {
         Optional<User> findUser = userRepository.findById(id);
-        return findUser.orElse(null);
+        return findUser.orElseThrow();
     }
 
     public User findUserByLogin(String name) {

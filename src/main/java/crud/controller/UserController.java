@@ -1,6 +1,8 @@
 package crud.controller;
 
 import crud.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import java.security.Principal;
 
 @Controller
 @RequestMapping("/users")
+@Api("Права пользователя")
 public class UserController {
     private final UserService userService;
 
@@ -19,6 +22,7 @@ public class UserController {
     }
 
     @GetMapping
+    @ApiOperation("Страница пользователя")
     public String myProfile(Model model, Principal principal) {
         model.addAttribute("user", userService.findUserByLogin(principal.getName()));
         model.addAttribute("principalName", principal.getName());
