@@ -12,10 +12,7 @@ import java.util.Set;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
+@Data
 @Table(name = "crud_users", uniqueConstraints = @UniqueConstraint(columnNames = "login"))
 public class User implements UserDetails {
     @Id
